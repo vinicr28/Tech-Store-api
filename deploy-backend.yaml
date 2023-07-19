@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rampup-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rampup-backend
+  template:
+    metadata:
+      labels:
+        app: rampup-backend
+    spec:
+      containers:
+        - name: rampup-backend
+          image: backend:final
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DBHOST
+              value: rampup-db
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
